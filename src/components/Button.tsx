@@ -1,0 +1,23 @@
+import "./button.css";
+
+interface ButtonProps {
+  name: string;
+  onClick: () => void;
+  bgColor?: string;
+}
+
+const Button = ({ name, onClick, bgColor }: ButtonProps) => {
+  return (
+    <div className="button-container">
+      <button
+        style={{ backgroundColor: bgColor }}
+        className="button"
+        onClick={onClick}
+      >
+        {name}
+      </button>
+    </div>
+  );
+};
+
+export default Button;

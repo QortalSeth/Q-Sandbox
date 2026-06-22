@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
-import { To, useNavigate } from 'react-router-dom';
-import { useSetAtom } from 'jotai';
-import { EnumTheme, themeAtom } from '../state/global/theme';
+import { useSetAtom } from "jotai";
+import { useEffect } from "react";
+import { To, useNavigate } from "react-router-dom";
+import { EnumTheme, themeAtom } from "../state/global/theme";
 
-type Theme = 'dark' | 'light';
+type Theme = "dark" | "light";
 
 interface CustomWindow extends Window {
   _qdnTheme: Theme;
@@ -13,12 +13,12 @@ const customWindow = window as unknown as CustomWindow;
 export const useIframe = () => {
   const setTheme = useSetAtom(themeAtom);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const themeColorDefault = customWindow?._qdnTheme;
-    if (themeColorDefault === 'dark') {
+    if (themeColorDefault === "dark") {
       setTheme(EnumTheme.DARK);
-    } else if (themeColorDefault === 'light') {
+    } else if (themeColorDefault === "light") {
       setTheme(EnumTheme.LIGHT);
     }
 
@@ -29,28 +29,28 @@ export const useIframe = () => {
         theme: Theme;
       };
     }) {
-      if (event.data?.action === 'NAVIGATE_TO_PATH' && event.data.path) {
+      if (event.data?.action === "NAVIGATE_TO_PATH" && event.data.path) {
         navigate(event.data.path); // Navigate directly to the specified path
 
         // Send a response back to the parent window after navigation is handled
         window.parent.postMessage(
-          { action: 'NAVIGATION_SUCCESS', path: event.data.path },
-          '*'
+          { action: "NAVIGATION_SUCCESS", path: event.data.path },
+          "*",
         );
-      } else if (event.data?.action === 'THEME_CHANGED' && event.data.theme) {
+      } else if (event.data?.action === "THEME_CHANGED" && event.data.theme) {
         const themeColor = event.data.theme;
-        if (themeColor === 'dark') {
+        if (themeColor === "dark") {
           setTheme(EnumTheme.DARK);
-        } else if (themeColor === 'light') {
+        } else if (themeColor === "light") {
           setTheme(EnumTheme.LIGHT);
         }
-      } 
+      }
     }
 
-    window.addEventListener('message', handleNavigation);
+    window.addEventListener("message", handleNavigation);
 
     return () => {
-      window.removeEventListener('message', handleNavigation);
+      window.removeEventListener("message", handleNavigation);
     };
   }, [navigate, setTheme]);
   return { navigate };

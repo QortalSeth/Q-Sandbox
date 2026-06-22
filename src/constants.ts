@@ -11,6 +11,7 @@ export const categories = [
   "Transactions",
   "System",
   "Other",
+  "Notification",
 ];
 
 export const actions = {
@@ -494,6 +495,164 @@ export const actions = {
     requiresApproval: false,
     isGatewayDisabled: false,
   },
+
+  // High Priority Actions
+GET_NODE_INFO: {
+  category: "System",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+GET_NODE_STATUS: {
+  category: "System",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+GET_PRIMARY_NAME: {
+  category: "Account",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+GET_USER_WALLET_TRANSACTIONS: {
+  category: "Account",
+  isTx: false,
+  requiresApproval: true,
+  isGatewayDisabled: false,
+},
+
+// Medium Priority Security Actions
+LOCK_TAB: {
+  category: "System",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+UNLOCK_TAB: {
+  category: "System",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+SAVE_FILE: {
+  category: "System",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+SESSION_PERMISSIONS: {
+  category: "System",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+
+// Medium Priority Cross-Chain Actions
+SIGN_FOREIGN_FEES: {
+  category: "Payment",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+START_CROSSCHAIN_SERVER: {
+  category: "Payment",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+TRANSFER_ASSET: {
+  category: "Payment",
+  isTx: true,
+  requiresApproval: true,
+  isGatewayDisabled: false,
+},
+REENCRYPT_GROUP_KEYS: {
+  category: "Group",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+MULTI_ASSET_PAYMENT_WITH_PRIVATE_DATA: {
+  category: "Payment",
+  isTx: true,
+  requiresApproval: true,
+  isGatewayDisabled: false,
+},
+
+// Lower Priority Actions
+NOTIFICATION_ADD: {
+  category: "Notification",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+NOTIFICATION_GET: {
+  category: "Notification",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+NOTIFICATION_HAS_PERMISSION: {
+  category: "Notification",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+NOTIFICATION_MARK_SEEN: {
+  category: "Notification",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+NOTIFICATION_PERMISSION: {
+  category: "Notification",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+NOTIFICATION_REMOVE: {
+  category: "Notification",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+OPEN_USER_LOOKUP: {
+  category: "Other",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+PLAY_ENCRYPTED_MEDIA: {
+  category: "Data",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+WHICH_UI: {
+  category: "System",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+DECRYPT_AESGCM: {
+  category: "Data",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+GET_ARRR_SYNC_STATUS: {
+  category: "Payment",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
+UPDATE_SUBSCRIPTIONS: {
+  category: "Other",
+  isTx: false,
+  requiresApproval: false,
+  isGatewayDisabled: false,
+},
 };
 
 export const formatBytes = (bytes: number, decimals = 2) => {
