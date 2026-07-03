@@ -14,7 +14,7 @@ interface CategoryWithActions {
 }
 
 interface ShowCategoriesProps {
-  selectedCategory: number;
+  selectedCategory: number | string;
   setSelectedAction: (action: Action) => void;
   search: string;
 }
