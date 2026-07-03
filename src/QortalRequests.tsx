@@ -13,7 +13,7 @@ export const QortalRequests = () => {
   const hasAsked = useAuthStore((state) => state.hasAsked);
   const setHasAsked = useAuthStore((state) => state.setHasAsked);
   const [search, setSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState<number | string>(0);
   const [selectedAction, setSelectedAction] = useState(null);
 
   const askForAccountInformation = useCallback(async () => {
@@ -53,7 +53,7 @@ export const QortalRequests = () => {
           id="id-select-category"
           value={selectedCategory}
           displayEmpty
-          onChange={(e) => setSelectedCategory(+e.target.value)}
+          onChange={(e) => setSelectedCategory(e.target.value)}
           sx={{
             width: "150px",
           }}
