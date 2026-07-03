@@ -1,12 +1,10 @@
-import { useState } from "react";
+import { Box, Typography, useTheme } from "@mui/material";
 import { Highlight, themes } from "prism-react-renderer";
-import { Typography, Box, useTheme } from "@mui/material";
+import { useState } from "react";
+import type { Key } from "react";
 import { CodeWrapper, DisplayCodeResponsePre } from "./Common-styles";
 
-export const DisplayCodeResponse = ({
-  codeBlock,
-  language = "javascript"
-}) => {
+export const DisplayCodeResponse = ({ codeBlock, language = "javascript" }) => {
   const theme = useTheme();
 
   const [copyText, setCopyText] = useState("Copy");
@@ -14,9 +12,7 @@ export const DisplayCodeResponse = ({
   return (
     <CodeWrapper>
       <Highlight
-        theme={
-         themes.palenight 
-        }
+        theme={themes.palenight}
         code={codeBlock}
         language="javascript"
       >
@@ -33,36 +29,42 @@ export const DisplayCodeResponse = ({
                 color: theme.palette.text.primary,
                 borderTopRightRadius: "7px",
                 borderTopLeftRadius: "7px",
-                marginBottom: "10px"
+                marginBottom: "10px",
               }}
             >
               <Typography>RESPONSE</Typography>
             </Box>
 
-            {tokens.map((line, i) => (
-              <div
-                key={i}
-                {...getLineProps({ line, key: i })}
-                style={{ display: "flex" }}
-              >
-                <span
-                  style={{
-                    display: "inline-block",
-                    userSelect: "none",
-                    opacity: "0.5",
-                    marginRight: "8px",
-                    fontSize: "16px"
-                  }}
+            {tokens.map((line, i) => {
+              const lineProps = getLineProps({ line, key: i });
+              const { key: lineKey, ...restLineProps } = lineProps;
+              return (
+                <div
+                  key={lineKey as Key}
+                  {...restLineProps}
+                  style={{ display: "flex" }}
                 >
-                  {i + 1}
-                </span>
-                <span style={{ flex: 1, fontSize: "18px" }}>
-                  {line.map((token, key) => (
-                    <span key={key} {...getTokenProps({ token, key })} />
-                  ))}
-                </span>
-              </div>
-            ))}
+                  <span
+                    style={{
+                      display: "inline-block",
+                      userSelect: "none",
+                      opacity: "0.5",
+                      marginRight: "8px",
+                      fontSize: "16px",
+                    }}
+                  >
+                    {i + 1}
+                  </span>
+                  <span style={{ flex: 1, fontSize: "18px" }}>
+                    {line.map((token, key) => {
+                      const tokenProps = getTokenProps({ token, key });
+                      const { key: tokenKey, ...restTokenProps } = tokenProps;
+                      return <span key={tokenKey as Key} {...restTokenProps} />;
+                    })}
+                  </span>
+                </div>
+              );
+            })}
           </DisplayCodeResponsePre>
         )}
       </Highlight>

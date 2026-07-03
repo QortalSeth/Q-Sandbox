@@ -1,5 +1,5 @@
 // zustand store
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface ThemeState {
   theme: string;
@@ -7,19 +7,19 @@ interface ThemeState {
 }
 
 export const useThemeStore = create<ThemeState>((set) => ({
-  theme: 'dark', // default value
+  theme: "dark", // default value
   setTheme: (theme) => set({ theme }),
 }));
 
 interface AuthState {
   address: string;
   hasAsked: boolean;
-  setAddress: (val: string)=> void;
-  setHasAsked: (val: boolean)=> void;
+  setAddress: (val: string) => void;
+  setHasAsked: (val: boolean) => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  address: '', // default value
+  address: "", // default value
   hasAsked: false,
   setAddress: (address) => set({ address }),
   setHasAsked: (hasAsked) => set({ hasAsked }),

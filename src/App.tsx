@@ -1,0 +1,128 @@
+import InfoIcon from "@mui/icons-material/Info";
+import {
+  AppBar,
+  Box,
+  ButtonBase,
+  Tooltip,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import "./App.css";
+import { useAtom } from "jotai";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import QSandboxLogoLight from "./assets/images/q-sandbox-dark.png";
+import QSandboxLogoDark from "./assets/images/q-sandbox-light.png";
+import { useIframe } from "./hooks/useIframeListener";
+import { EnumTheme, themeAtom } from "./state/global/theme.ts";
+import ThemeProviderWrapper from "./styles/theme-provider.tsx";
+
+interface NavItem {
+  label: string;
+  path: string;
+  id: string;
+}
+
+export function App() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  useIframe();
+  const navItems: NavItem[] = [
+    { label: "Qortal Requests", path: "/", id: "/" },
+    {
+      label: "Framework",
+      path: "/framework/default/getting-started-introduction",
+      id: "/framework",
+    },
+    { label: "Tutorials", path: "/tutorials", id: "/tutorials" },
+  ];
+
+  const [selectedTheme] = useAtom(themeAtom);
+  const theme = useTheme();
+
+  return (
+    <ThemeProviderWrapper>
+      <Box
+        sx={{
+          height: "100vh",
+          width: "100%",
+          overflow: "hidden",
+        }}
+      >
+        <Box sx={{ flexGrow: 1 }}>
+          <AppBar position="static">
+            <div className="flex-row">
+              <div className="logo-container">
+                <img
+                  className="logo"
+                  src={
+                    selectedTheme === EnumTheme.DARK
+                      ? QSandboxLogoDark
+                      : QSandboxLogoLight
+                  }
+                  alt="q-sandbox-logo"
+                />
+                <Box
+                  sx={{
+                    display: "flex",
+                    marginLeft: "auto",
+                    gap: "25px",
+                    paddingRight: "25px",
+                  }}
+                >
+                  {navItems.map(({ label, path, id }) => {
+                    const isActive =
+                      id === "/" && location.pathname === "/"
+                        ? true
+                        : id === "/"
+                          ? false
+                          : location.pathname?.includes(id);
+
+                    return (
+                      <ButtonBase
+                        key={path}
+                        onClick={() => navigate(path)}
+                        sx={{
+                          borderBottom: isActive
+                            ? "2px solid"
+                            : "2px solid transparent",
+                          color: theme.palette.text.primary,
+                          "&:hover": {
+                            borderBottom: "2px solid",
+                            color: theme.palette.text.primary,
+                          },
+                          transition: "all 0.2s",
+                          paddingBottom: "4px",
+                        }}
+                      >
+                        <Typography>{label}</Typography>
+                      </ButtonBase>
+                    );
+                  })}
+                </Box>
+
+                <Box
+                  sx={{
+                    marginRight: "15px",
+                  }}
+                >
+                  <Tooltip
+                    className="tooltip"
+                    title="Thanks for using Q-Sandbox! Please contact A-Test or Bester by Q-Mail if something does not seem to not work as expected. Thanks and happy coding!"
+                    arrow
+                    placement="bottom"
+                  >
+                    <InfoIcon className="info-icon" />
+                  </Tooltip>
+                </Box>
+              </div>
+            </div>
+          </AppBar>
+        </Box>
+
+        <div className="container">
+          <Outlet />
+        </div>
+      </Box>
+    </ThemeProviderWrapper>
+  );
+}

@@ -1,12 +1,12 @@
-import { StyledIcon } from '../../components/Common-styles';
-import { IconTypes } from './IconTypes'
+import { StyledIcon } from "../../components/Common-styles";
+import { IconTypes } from "./IconTypes";
 
 export const DarkModeSVG: React.FC<IconTypes> = ({
   color,
   height,
   width,
   className,
-  onClickFunc
+  onClickFunc,
 }) => {
   return (
     <StyledIcon

@@ -1,9 +1,21 @@
+import { Box, Button, Chip, Stack, TextField } from "@mui/material";
 import { useState } from "react";
-import { TextField, Button, Chip, Box, Stack } from "@mui/material";
 
-export function OptionsManager({ items, setItems, label = "Item" , maxLength}) {
-  const [inputValue, setInputValue] = useState("");
-  const [editIndex, setEditIndex] = useState(null);
+interface OptionsManagerProps {
+  items: string[];
+  setItems: (items: string[]) => void;
+  label?: string;
+  maxLength?: number;
+}
+
+export function OptionsManager({
+  items,
+  setItems,
+  label = "Item",
+  maxLength,
+}: OptionsManagerProps) {
+  const [inputValue, setInputValue] = useState<string>("");
+  const [editIndex, setEditIndex] = useState<number | null>(null);
 
   const handleAddOrUpdateItem = () => {
     if (inputValue.trim() === "") return;
@@ -15,7 +27,7 @@ export function OptionsManager({ items, setItems, label = "Item" , maxLength}) {
       setItems(updatedItems);
       setEditIndex(null);
     } else {
-      if(maxLength && items.length >= maxLength) return
+      if (maxLength && items.length >= maxLength) return;
       // Add new item
       if (!items.includes(inputValue)) {
         setItems([...items, inputValue]);
@@ -25,11 +37,11 @@ export function OptionsManager({ items, setItems, label = "Item" , maxLength}) {
     setInputValue(""); // Clear the input
   };
 
-  const handleDeleteItem = (index) => {
+  const handleDeleteItem = (index: number) => {
     setItems(items.filter((_, i) => i !== index));
   };
 
-  const handleEditItem = (index) => {
+  const handleEditItem = (index: number) => {
     setInputValue(items[index]);
     setEditIndex(index);
   };
@@ -43,10 +55,7 @@ export function OptionsManager({ items, setItems, label = "Item" , maxLength}) {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
-        <Button
-          variant="contained"
-          onClick={handleAddOrUpdateItem}
-        >
+        <Button variant="contained" onClick={handleAddOrUpdateItem}>
           {editIndex !== null ? "Update" : "Add"}
         </Button>
       </Stack>
@@ -58,11 +67,6 @@ export function OptionsManager({ items, setItems, label = "Item" , maxLength}) {
             label={item}
             onDelete={() => handleDeleteItem(index)}
             onClick={() => handleEditItem(index)}
-            // deleteIcon={
-            //   <IconButton onClick={() => handleEditItem(index)} size="small">
-            //     <Edit fontSize="small" />
-            //   </IconButton>
-            // }
             sx={{ margin: 0.5 }}
           />
         ))}

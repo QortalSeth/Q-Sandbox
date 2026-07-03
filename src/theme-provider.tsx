@@ -1,9 +1,10 @@
 "use client";
-import React, { FC } from "react";
 import { ThemeProvider } from "@emotion/react";
+import React, { FC } from "react";
+import { useThemeStore } from "./atoms/global";
 
-import {lightTheme, darkTheme} from "./styles/theme"
-import {  useThemeStore } from "./atoms/global";
+import { darkTheme, lightTheme } from "./styles/theme";
+
 interface ThemeProviderWrapperProps {
   children: React.ReactNode;
 }

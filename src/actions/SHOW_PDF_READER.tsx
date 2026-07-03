@@ -1,19 +1,24 @@
-import React, { useState } from "react";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import { Box, Card, CircularProgress, styled, Typography } from "@mui/material";
+import {
+  Box,
+  Button as MUIbutton,
+  Card,
+  CircularProgress,
+  styled,
+  Typography,
+} from "@mui/material";
+import { showError } from "qapp-core";
+import React, { useState } from "react";
+import { useDropzone } from "react-dropzone";
+import Button from "../components/Button";
 import { DisplayCode } from "../components/DisplayCode";
 import { DisplayCodeResponse } from "../components/DisplayCodeResponse";
-import Button from "../components/Button";
-import { Button as MUIbutton } from "@mui/material";
-import { OptionsManager } from "../components/OptionsManager";
 import {
   FieldExplanation,
   GeneralExplanation,
 } from "../components/QRComponents";
 import { Spacer } from "../components/Spacer";
-import { formatResponse } from "./SIGN_TRANSACTION.jsx";
-import { useDropzone } from "react-dropzone";
-import { showError } from "qapp-core";
+import { formatResponse } from "./SIGN_TRANSACTION.tsx";
 
 export const AddLogoIcon = styled(AddPhotoAlternateIcon)(({ theme }) => ({
   color: "#fff",
