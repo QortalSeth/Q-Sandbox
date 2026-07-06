@@ -1,4 +1,13 @@
-import { Box, Card, CircularProgress, styled, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CircularProgress,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  styled,
+  Typography,
+} from "@mui/material";
 
 import beautify from "js-beautify";
 import React, { useState } from "react";
@@ -11,6 +20,7 @@ import {
   GeneralExplanation,
 } from "../components/QRComponents";
 import { Spacer } from "../components/Spacer";
+import { services } from "../constants";
 
 export const Label = styled("label")(
   ({ theme }) => `
@@ -210,20 +220,41 @@ interface SaveFileRequest {
             }}
           >
             <Typography variant="h6">location.service</Typography>
-            <CustomInput
-              type="text"
-              placeholder="location.service"
+            <Select
+              size="small"
+              labelId="label-select-service"
+              id="id-select-service"
               value={requestData.location?.service || ""}
-              name="location.service"
-              onChange={handleChange}
-            />
+              displayEmpty
+              onChange={(e: SelectChangeEvent<string>) =>
+                setRequestData((prev) => ({
+                  ...prev,
+                  location: {
+                    ...prev.location,
+                    service: e.target.value,
+                  },
+                }))
+              }
+              sx={{
+                width: "300px",
+              }}
+            >
+              <MenuItem value="">
+                <em>No service selected</em>
+              </MenuItem>
+              {services?.map((service) => (
+                <MenuItem key={service.name} value={service.name}>
+                  {`${service.name} - max ${service.sizeLabel}`}
+                </MenuItem>
+              ))}
+            </Select>
             <Spacer height="10px" />
             <FieldExplanation>
               <Typography>Required field</Typography>
             </FieldExplanation>
             <Spacer height="5px" />
             <Typography>
-              Enter the service type for the QDN resource location (e.g., "DOCUMENT").
+              Select the service type for the QDN resource location.
             </Typography>
           </Box>
           <Spacer height="20px" />

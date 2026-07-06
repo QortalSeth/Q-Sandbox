@@ -1,4 +1,13 @@
-import { Box, Card, CircularProgress, styled, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CircularProgress,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  styled,
+  Typography,
+} from "@mui/material";
 
 import beautify from "js-beautify";
 import React, { useState } from "react";
@@ -11,6 +20,7 @@ import {
   GeneralExplanation,
 } from "../components/QRComponents";
 import { Spacer } from "../components/Spacer";
+import { services } from "../constants";
 
 export const Label = styled("label")(
   ({ theme }: { theme: any }) => `
@@ -33,7 +43,7 @@ interface RequestData {
   mediaId: string;
   key: string;
   iv: string;
-  location: string;
+  service: string;
 }
 
 interface ComponentProps {
@@ -47,7 +57,7 @@ export const PLAY_ENCRYPTED_MEDIA: React.FC<ComponentProps> = ({ myAddress }) =>
     mediaId: "",
     key: "",
     iv: "",
-    location: "",
+    service: "VIDEO",
   });
   const [responseData, setResponseData] = useState<string>(formatResponse(``));
 
@@ -57,7 +67,7 @@ await qortalRequest({
   mediaId: "${requestData?.mediaId}",
   key: "${requestData?.key}",
   iv: "${requestData?.iv}",
-  location: "${requestData?.location}"
+  service: "${requestData?.service}"
 });
 `.trim();
 
@@ -67,7 +77,7 @@ interface PlayEncryptedMediaRequest {
   mediaId: string;
   key: string;
   iv: string;
-  location: string;
+  service: string;
 }
 `.trim();
 
@@ -79,7 +89,7 @@ interface PlayEncryptedMediaRequest {
         mediaId: requestData?.mediaId,
         key: requestData?.key,
         iv: requestData?.iv,
-        location: requestData?.location,
+        service: requestData?.service,
       } as any);
 
       setResponseData(formatResponse(JSON.stringify(result)));
@@ -178,21 +188,39 @@ interface PlayEncryptedMediaRequest {
               Enter the initialization vector (IV) used for encryption.
             </Typography>
             <Spacer height="20px" />
-            <Typography variant="h6">location</Typography>
-            <CustomInput
-              type="text"
-              placeholder="location"
-              value={requestData.location}
-              name="location"
-              onChange={handleChange}
-            />
+            <Typography variant="h6">service</Typography>
+            <Select
+              size="small"
+              labelId="label-select-service"
+              id="id-select-service"
+              value={requestData.service}
+              displayEmpty
+              onChange={(e: SelectChangeEvent<string>) =>
+                setRequestData((prev) => ({
+                  ...prev,
+                  service: e.target.value,
+                }))
+              }
+              sx={{
+                width: "300px",
+              }}
+            >
+              <MenuItem value="">
+                <em>No service selected</em>
+              </MenuItem>
+              {services?.map((service) => (
+                <MenuItem key={service.name} value={service.name}>
+                  {`${service.name} - max ${service.sizeLabel}`}
+                </MenuItem>
+              ))}
+            </Select>
             <Spacer height="10px" />
             <FieldExplanation>
               <Typography>Required field</Typography>
             </FieldExplanation>
             <Spacer height="5px" />
             <Typography>
-              Enter the QDN service location (e.g., "WEBSITE", "VIDEO").
+              Select the QDN service type for the encrypted media.
             </Typography>
             <Spacer height="20px" />
             <Button
